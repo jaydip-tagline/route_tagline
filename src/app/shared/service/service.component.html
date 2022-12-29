@@ -1,0 +1,16 @@
+<div class="services"> 
+    <div class="boxes">
+        <div>
+        <div class="divcontent divcontent2">
+            <div class="flex">
+                <img [src]="servicelist.image">
+                <h2>{{servicelist.title}}</h2>
+            </div>
+            <p>{{servicelist.description}}</p>
+            <a href="#">{{servicelist.button}}</a>
+            <button type="button" routerLink='service/click'>click</button>&nbsp;
+        </div>
+    </div>
+</div>
+
+<p *ngIf='router.url.includes("click")'>You click!!!!</p>
