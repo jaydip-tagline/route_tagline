@@ -7,22 +7,11 @@
     margin-top: 50px;
 }
 
-// .services .headerline{
-//     display: flex;
-//     justify-content: center;
-//     width: 175px;
-//     margin: auto;
-//     height: 2px;
-//     background: radial-gradient(50% 151250% at 50% -100%,#d96122 0%,rgba(255,255,255,0) 100%);
-// }
-
 .boxes {
-    // width: 1440px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     margin: 35px 242px;
-    // border-radius: 10px;
 }
 
 .boxes .divcontent {
@@ -64,6 +53,14 @@
     cursor: pointer;
     font-family: poppins, sans-serif;
     padding: 30px 25px;
+}
+.button{
+    color: #D96122;
+    padding: 8px;
+    font-size: 13px;
+    background-color: antiquewhite;
+    border: none;
+    border-radius: 10px;
 }
 
 h2 {
