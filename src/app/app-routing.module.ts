@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './Features/about/about.component';
 import { DynamiceditComponent } from './Features/dynamicedit/dynamicedit.component';
 import { HomeComponent } from './Features/home/home.component';
+import { Child1Component } from './Features/service/child1/child1.component';
+import { Child2Component } from './Features/service/child2/child2.component';
 import { ServiceComponent } from './Features/service/service.component';
+import { TemplateformComponent } from './templateform/templateform.component';
 
 const routes: Routes = [
   {
@@ -30,11 +33,25 @@ const routes: Routes = [
   // ],
   {
     path: 'aboutus',
-    component: AboutComponent,
+    component: TemplateformComponent,
   },
   {
     path: 'edit/:id',
     component: DynamiceditComponent,
+  },
+  {
+    path: 'contact',
+    component: ServiceComponent,
+    children: [
+      {
+        path: 'head',
+        component: Child1Component,
+      },
+      {
+        path: 'tail',
+        component: Child2Component,
+      },
+    ],
   },
   {
     path: '**',

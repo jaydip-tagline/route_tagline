@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Divcon2 } from 'src/app/common';
 
 @Component({
@@ -57,11 +57,18 @@ export class ServiceComponent implements OnInit {
     },
   ];
   id!: number;
-  constructor(private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {}
 
-  click(id: number) {
-    console.log('id :>> ', id);
-  }
+  // click(id: number) {
+  //   console.log('id :>> ', id);
+  // }
+
+  // head() {
+  //   this.router.navigate(['head'], { relativeTo: this.route });
+  // }
+  // tail() {
+  //   this.router.navigate(['tail'], { relativeTo: this.route });
+  // }
 }
