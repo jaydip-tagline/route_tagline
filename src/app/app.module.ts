@@ -10,6 +10,7 @@ import { Child1Component } from './Features/service/child1/child1.component';
 import { Child2Component } from './Features/service/child2/child2.component';
 import { FormsModule } from '@angular/forms';
 import { TemplateformComponent } from './templateform/templateform.component';
+import { TestGuard } from './Features/auth/guard/test.guard';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { TemplateformComponent } from './templateform/templateform.component';
     FormsModule,
   ],
   exports: [SharedModule],
-  providers: [],
+  providers: [TestGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

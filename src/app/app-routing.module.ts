@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './Features/about/about.component';
+import { TestGuard } from './Features/auth/guard/test.guard';
 import { DynamiceditComponent } from './Features/dynamicedit/dynamicedit.component';
 import { HomeComponent } from './Features/home/home.component';
 import { Child1Component } from './Features/service/child1/child1.component';
@@ -10,12 +11,19 @@ import { TemplateformComponent } from './templateform/templateform.component';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () =>
+      import('./Features/auth/auth.module').then((x) => x.AuthModule),
+  },
+  {
     path: 'user',
     loadChildren: () =>
       import('../app/Features/user/user.module').then((x) => x.UserModule),
   },
+
   {
     path: 'home',
+    canActivate: [TestGuard],
     component: HomeComponent,
   },
   {
@@ -55,7 +63,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: '',
   },
 ];
 
