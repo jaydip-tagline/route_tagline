@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './Features/about/about.component';
+import { RoleGuard } from './Features/auth/guard/role.guard';
 import { TestGuard } from './Features/auth/guard/test.guard';
 import { DynamiceditComponent } from './Features/dynamicedit/dynamicedit.component';
 import { HomeComponent } from './Features/home/home.component';
@@ -17,17 +18,20 @@ const routes: Routes = [
   },
   {
     path: 'user',
+    // canActivate: [RoleGuard],
+    canLoad: [RoleGuard],
     loadChildren: () =>
       import('../app/Features/user/user.module').then((x) => x.UserModule),
   },
 
   {
     path: 'home',
-    canActivate: [TestGuard],
     component: HomeComponent,
+    canActivate: [TestGuard],
   },
   {
     path: 'service',
+    canLoad: [TestGuard],
     loadChildren: () =>
       import('../app/servicelist/servicelist.module').then(
         (z) => z.ServicelistModule
@@ -42,18 +46,23 @@ const routes: Routes = [
   {
     path: 'aboutus',
     component: TemplateformComponent,
+    canActivate: [TestGuard],
   },
   {
     path: 'edit/:id',
     component: DynamiceditComponent,
+    canActivate: [TestGuard],
   },
   {
     path: 'contact',
     component: ServiceComponent,
+    canActivate: [RoleGuard],
+    canActivateChild: [TestGuard],
     children: [
       {
         path: 'head',
         component: Child1Component,
+        canDeactivate: [TestGuard],
       },
       {
         path: 'tail',

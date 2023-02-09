@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../service/authentication.service';
 export interface Login {
   email: string;
   password: string;
@@ -15,7 +16,11 @@ export class LoginComponent implements OnInit {
   isSubmitted = false;
   loginData: Login[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm();
@@ -31,20 +36,19 @@ export class LoginComponent implements OnInit {
     return this.login.controls;
   }
 
-  onSubmit(): void {
+  onSignin(): void {
     if (this.login.invalid) {
       this.isSubmitted = true;
       return;
     } else {
-      let data = {
-        id: this.loginData.length + 1,
-        ...this.login.value,
-      };
-      this.loginData.push(data);
-      localStorage.setItem('email', this.login.value.email);
-      this.router.navigate(['/home']);
-      this.isSubmitted = false;
+      this.authService.login(this.login.value).subscribe((login: any) => {
+        if (login) {
+          localStorage.setItem('email', login.email);
+          localStorage.setItem('passwoprd', login.password);
+          localStorage.setItem('role', login.role);
+          this.router.navigate(['/home']);
+        }
+      });
     }
-    this.login.reset();
   }
 }

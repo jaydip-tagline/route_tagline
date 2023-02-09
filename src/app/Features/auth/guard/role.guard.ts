@@ -7,22 +7,16 @@ import {
   CanLoad,
   CanMatch,
   Route,
-  Router,
   RouterStateSnapshot,
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-export interface Ideactive {
-  canExit: () => boolean;
-}
 import { Observable } from 'rxjs';
-import { Child1Component } from '../../service/child1/child1.component';
-import { AuthenticationService } from '../service/authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TestGuard
+export class RoleGuard
   implements
     CanActivate,
     CanActivateChild,
@@ -30,10 +24,6 @@ export class TestGuard
     CanLoad,
     CanMatch
 {
-  constructor(
-    private authService: AuthenticationService,
-    private router: Router
-  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -42,12 +32,13 @@ export class TestGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.authService.isLoggedIn()) {
+    let role = localStorage.getItem('role');
+    if (role == 'admin') {
       return true;
+    } else {
+      alert("you don't have any admin rights");
+      return false;
     }
-    alert('Please first login');
-    this.router.navigate(['']);
-    return false;
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
@@ -57,13 +48,10 @@ export class TestGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (confirm('Press OK, If you are an admin?')) {
-      return true;
-    }
-    return false;
+    return true;
   }
   canDeactivate(
-    component: Child1Component,
+    component: unknown,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot
@@ -72,7 +60,7 @@ export class TestGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return component.canExit();
+    return true;
   }
   canMatch(
     route: Route,
@@ -92,15 +80,12 @@ export class TestGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    let email = localStorage.getItem('email');
     let role = localStorage.getItem('role');
-    if (role === 'admin' && email === 'admin@gmail.com') {
+    if (role == 'admin') {
       return true;
-    } else if (email === null) {
-      alert('Please first login');
     } else {
       alert("you don't have any admin rights");
+      return false;
     }
-    return false;
   }
 }
